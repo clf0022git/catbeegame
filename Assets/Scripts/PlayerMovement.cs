@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && IsGrounded())
         {
             //Initial fly up
-            this.rigid2D.AddForce(transform.up * 100);
+            this.rigid2D.AddForce(transform.up * 30);
             flyGauge.Show();
         }
 
@@ -147,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Might cause issues later because it resets every frame on the ground
-        if (this.rigid2D.velocity.y == 0 && !Input.GetKey(KeyCode.Space) && flyTemp < flyTime)
+        if (IsGrounded() && !Input.GetKey(KeyCode.Space) && flyTemp < flyTime)
         {
             flyTemp += (2 * Time.deltaTime);
             flyGauge.SetGauge(flyTemp / flyTime);
@@ -165,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // limit PC's speed and avoid acceleration.
-        if (speedx < this.maxWalkSpeed && this.rigid2D.velocity.y == 0)
+        if (speedx < this.maxWalkSpeed && IsGrounded())
         {
             this.rigid2D.AddForce(transform.right * key * this.walkForce);
         }
@@ -219,8 +219,8 @@ public class PlayerMovement : MonoBehaviour
         }
         Debug.DrawRay(boxCollider2d.bounds.center + new Vector3(boxCollider2d.bounds.extents.x, 0), Vector2.down * (boxCollider2d.bounds.extents.y + extraHeightTest), rayColor);
         Debug.DrawRay(boxCollider2d.bounds.center - new Vector3(boxCollider2d.bounds.extents.x, 0), Vector2.down * (boxCollider2d.bounds.extents.y + extraHeightTest), rayColor);
-        Debug.DrawRay(boxCollider2d.bounds.center - new Vector3(boxCollider2d.bounds.extents.x, boxCollider2d.bounds.extents.y + extraHeightTest), Vector2.right * (boxCollider2d.bounds.extents.x), rayColor);
-        Debug.Log(raycastHit2d.collider);
+        Debug.DrawRay(boxCollider2d.bounds.center - new Vector3(boxCollider2d.bounds.extents.x, boxCollider2d.bounds.extents.y + extraHeightTest), Vector2.right * (boxCollider2d.bounds.extents.x * 2f), rayColor);
+        //Debug.Log(raycastHit2d.collider);
         return raycastHit2d.collider != null;
     }
 }

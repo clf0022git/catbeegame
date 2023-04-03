@@ -13,10 +13,9 @@ public class FlowerReact : MonoBehaviour
     {
         flowerOriginalPos = Flower.transform.position;
     }
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log(collision);
         if (collision.gameObject == Player)
         {
             if (triggerFlower == true)
@@ -27,8 +26,9 @@ public class FlowerReact : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
+        Debug.Log(collision);
         if (collision.gameObject == Player)
         {
             if(triggerFlower == true)
