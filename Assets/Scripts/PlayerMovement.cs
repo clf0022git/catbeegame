@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     public FlyGauge flyGauge;
     int pastKey = 0;
     bool flightTurn = false;
+    public bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
