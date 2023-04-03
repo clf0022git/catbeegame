@@ -8,6 +8,11 @@ public class FlyGauge : MonoBehaviour
 {
     public Image image;
     private float fillNumber = 1;
+    private GameObject player;
+    void Start()
+    {
+        this.player = GameObject.Find("Player");
+    }
 
     public void SetGauge(float value)
     {
@@ -27,6 +32,9 @@ public class FlyGauge : MonoBehaviour
 
     private void Update()
     {
+        Vector3 playerPos = this.player.transform.position;
+        transform.position = new Vector3(playerPos.x + 0.6f, playerPos.y + 0.5f, transform.position.z);
+
         if (fillNumber < 0.25)
         {
             image.color = Color.red;
