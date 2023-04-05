@@ -5,24 +5,19 @@ using UnityEngine;
 public class FlowerReact : MonoBehaviour
 {
     public GameObject Player;
-    public GameObject Flower;
+    public GameObject PlayerParent;
     private Vector2 flowerOriginalPos;
-    bool triggerFlower = true;
-
     private void Start()
     {
-        flowerOriginalPos = Flower.transform.position;
+        flowerOriginalPos = PlayerParent.transform.position;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log(collision);
         if (collision.gameObject == Player)
         {
-            if (triggerFlower == true)
-            {
-                moveFlower();
-            }
-
+            Player.transform.SetParent(PlayerParent.transform);
+            moveFlower();
         }
     }
 
@@ -31,23 +26,19 @@ public class FlowerReact : MonoBehaviour
         Debug.Log(collision);
         if (collision.gameObject == Player)
         {
-            if(triggerFlower == true)
-            {
-                fixFlower();
-            } else
-            { triggerFlower = true; }
+            fixFlower();
+            Player.transform.SetParent(null);
         }
     }
 
     private void moveFlower()
     {
-        float y = Flower.transform.position.y - 0.1f;
-        Flower.transform.position = new Vector2(Flower.transform.position.x, y);
+        float y = PlayerParent.transform.position.y - 0.1f;
+        PlayerParent.transform.position = new Vector2(PlayerParent.transform.position.x, y);
     }
 
     private void fixFlower()
     {
-        Flower.transform.position = flowerOriginalPos;
-        triggerFlower = false;
+        PlayerParent.transform.position = flowerOriginalPos;
     }
 }

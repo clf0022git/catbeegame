@@ -35,32 +35,32 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        
+        if (IsGrounded())
+        {
+            animator.SetBool("IsFlying", false);
+        }
+
+        if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) && IsGrounded())
+        {
+            animator.SetBool("IsWalking", true);
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(this.rigid2D.velocity.x == 0 && this.rigid2D.velocity.y == 0)
-        {
-            animator.Play("CatIdle");
-        }
-        else
-        {
-            animator.Play("CatWalk");
-        }
 
         // move left and right
         // Includes my attempt to give the funny bee movement to the bee
         int key = 0;
         if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
         {
-            if(pastKey == -1 && this.rigid2D.velocity.y != 0)
+            if (pastKey == -1 && this.rigid2D.velocity.y != 0)
             {
                 flightTurn = true;
             }
 
-            if (pastKey == -1 && this.rigid2D.velocity.y == 0 && !Input.GetKey(KeyCode.A))
+            if (pastKey == -1 && IsGrounded() && !Input.GetKey(KeyCode.A))
             {
                 CreateDust(1);
                 pastKey = 0;
@@ -70,12 +70,13 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {
+
             if (pastKey == 1 && this.rigid2D.velocity.y !=0)
             {
                 flightTurn = true;
             }
 
-            if (pastKey == 1 && this.rigid2D.velocity.y == 0 && !Input.GetKey(KeyCode.D))
+            if (pastKey == 1 && IsGrounded() && !Input.GetKey(KeyCode.D))
             {
                 CreateDust(-1);
                 pastKey = 0;
@@ -93,6 +94,8 @@ public class PlayerMovement : MonoBehaviour
             //Initial fly up
             this.rigid2D.AddForce(transform.up * 30);
             flyGauge.Show();
+            animator.SetBool("IsWalking", false);
+            animator.SetBool("IsFlying", true);
         }
 
         //Allows flight for the during of the flightTimer, we can be adjusted as the player progresses
@@ -175,6 +178,10 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(key, 1, 1);
         }
+        else
+        {
+            animator.SetBool("IsWalking", false);
+        }
 
         if (this.rigid2D.velocity.x != 0 && this.rigid2D.velocity.y != 0)
         {
@@ -184,6 +191,7 @@ public class PlayerMovement : MonoBehaviour
         {
             this.animator.speed = 1;
         }
+        Debug.Log(speedx);
     }
 
     void OnTriggerEnter2D(Collider2D other)
