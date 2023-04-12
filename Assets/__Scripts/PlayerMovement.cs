@@ -17,14 +17,17 @@ public class PlayerMovement : MonoBehaviour
     float walkForce = 10.0f;
     float maxFlySpeed = 2f;
     float maxWalkSpeed = 2f;
-    float flyTime = 1.0f;
+    [SerializeField] float flyTime = 1.0f;
+    [SerializeField] float jumpForce = 200f;
     float flyTemp = 0.0f;
     public ParticleSystem dustLeft;
     public ParticleSystem dustRight;
     float speed;
     public FlyGauge flyGauge;
     int pastKey = 0;
+    int rkey;
     bool flightTurn = false;
+    bool spaceCheck = true;
 
     // Start is called before the first frame update
     void Start()
@@ -65,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         int key = 0;
         if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
         {
-            if (pastKey == -1 && this.rigid2D.velocity.y != 0)
+            if (pastKey == -1 && !IsGrounded())
             {
                 flightTurn = true;
             }
@@ -76,12 +79,13 @@ public class PlayerMovement : MonoBehaviour
                 pastKey = 0;
             }
             key = 1;
+            rkey = 1;
             pastKey = 1;
         }
         else if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {
 
-            if (pastKey == 1 && this.rigid2D.velocity.y != 0)
+            if (pastKey == 1 && !IsGrounded())
             {
                 flightTurn = true;
             }
@@ -91,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
                 CreateDust(-1);
                 pastKey = 0;
             }
+            rkey = -1;
             key = -1;
             pastKey = -1;
         }
@@ -99,21 +104,32 @@ public class PlayerMovement : MonoBehaviour
         float speedx = Mathf.Abs(this.rigid2D.velocity.x);
         float speedy = Mathf.Abs(this.rigid2D.velocity.y);
 
-        if (Input.GetKey(KeyCode.Space) && IsGrounded())
+        //Debug.Log(speedx);
+        //Debug.Log(speedy);
+
+        if (Input.GetKey(KeyCode.Space) && IsGrounded() && spaceCheck)
         {
             //Initial fly up
-            this.rigid2D.AddForce(transform.up * 30);
+            this.rigid2D.AddForce(transform.up * jumpForce); // Initial force applied to the jump
             flyGauge.Show();
             animator.SetBool("IsWalking", false);
             animator.SetBool("IsFlying", true);
+            spaceCheck = false;
+        } else if (!Input.GetKey(KeyCode.Space))
+        {
+            spaceCheck = true;
         }
 
+        //Debug.Log(spaceCheck);
+
         //Allows flight for the during of the flightTimer, we can be adjusted as the player progresses
-        if (flyTemp > 0 && (!IsGrounded() || Input.GetKey(KeyCode.Space))) //Makes sure the player isn't cheating by flying under a platform
+        if (flyTemp > 0 && (!IsGrounded())) //Makes sure the player isn't cheating by flying under a platform
         {
             flyGauge.Show();
             if (Input.GetKey(KeyCode.Space))
             {
+                animator.SetBool("IsWalking", false);
+                animator.SetBool("IsFlying", true);
                 flyTemp -= Time.deltaTime;
                 flyGauge.SetGauge(flyTemp / flyTime);
                 //Debug.Log(flyTemp);
@@ -138,6 +154,8 @@ public class PlayerMovement : MonoBehaviour
                     flyForce = 20f;
                 }
 
+             
+
                 this.rigid2D.AddForce(transform.up * flyForce);
             }
 
@@ -149,17 +167,26 @@ public class PlayerMovement : MonoBehaviour
                 //Debug.Log("boost triggered");
             }
 
-            if (speedx >= this.maxFlyHorizontalForce)
+            if (key == 0 && speedx != 0)
+            {
+                //speed = speed/2;
+                //Debug.Log(speed);
+                this.rigid2D.AddForce(transform.right * -rkey * speedx);
+                //Debug.Log("Decreasing Speed");
+            }
+            else if (speedx >= this.maxFlyHorizontalForce)
             {
                 speed = speed / 2;
                 //Debug.Log(speed);
                 this.rigid2D.AddForce(transform.right * key * speed);
+                //Debug.Log("PP");
             }
             else
             {
                 speed = speedx;
 
                 this.rigid2D.AddForce(transform.right * key * this.flyHorizontalForce);
+                //Debug.Log("Maintaining Speed");
             }
 
         }
@@ -184,8 +211,10 @@ public class PlayerMovement : MonoBehaviour
             flyGauge.Hide();
         }
 
+        //Debug.Log(speedy);
+
         // limit PC's speed and avoid acceleration.
-        if (speedx < this.maxWalkSpeed && IsGrounded())
+       if ((speedx < this.maxWalkSpeed) && IsGrounded())
         {
             this.rigid2D.AddForce(transform.right * key * this.walkForce);
         }
@@ -200,14 +229,14 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("IsWalking", false);
         }
 
-        if (this.rigid2D.velocity.x != 0 && this.rigid2D.velocity.y != 0)
-        {
-            this.animator.speed = speedx / 2.0f;
-        }
-        else
-        {
-            this.animator.speed = 1;
-        }
+        //if (this.rigid2D.velocity.x != 0 && this.rigid2D.velocity.y != 0)
+        //{
+        //    this.animator.speed = speedx / 2.0f;
+        //}
+        //else
+        //{
+        //    this.animator.speed = 1;
+        //}
         //Debug.Log(speedx);
     }
 

@@ -59,6 +59,7 @@
     <Compile Include="Assets\__Scripts\BenchSit.cs" />
     <Compile Include="Assets\__Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\__Scripts\FlowerReact.cs" />
+    <Compile Include="Assets\__Scripts\PlayerBench.cs" />
     <Compile Include="Assets\__Scripts\PlatformAttach.cs" />
     <Compile Include="Assets\__Scripts\FlyGauge.cs" />
     <Compile Include="Assets\__Scripts\CameraController.cs" />

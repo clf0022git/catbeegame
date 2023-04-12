@@ -20,7 +20,27 @@ public class CameraController : MonoBehaviour
     {
 
         // Keeps the camera down until the player flies too high
-        if(this.player.transform.position.y > 2 || this.player.transform.position.y < -3.5)
+        if (this.player.transform.position.y > 0.5 && (this.player.transform.position.x < 0 && this.player.transform.position.x > -20))
+        {
+            Vector3 playerPos = this.player.transform.position;
+            transform.position = new Vector3(playerPos.x, playerPos.y, transform.position.z);
+        }
+        else if (this.player.transform.position.x < -18.5f && this.player.transform.position.x > -55.5f)
+        {
+            Vector3 playerPos = this.player.transform.position;
+            transform.position = new Vector3(playerPos.x, -3.0f, transform.position.z);
+        }
+        else if (this.player.transform.position.x < -75 || this.player.transform.position.y < -5)
+        {
+            Vector3 playerPos = this.player.transform.position;
+            transform.position = new Vector3(playerPos.x, playerPos.y, transform.position.z);
+        }
+        else if (this.player.transform.position.y < -3.5 && this.player.transform.position.x > 25)
+        {
+            Vector3 playerPos = this.player.transform.position;
+            transform.position = new Vector3(playerPos.x, playerPos.y, transform.position.z);
+        }
+        else if (this.player.transform.position.x > 52.5f)
         {
             Vector3 playerPos = this.player.transform.position;
             transform.position = new Vector3(playerPos.x, playerPos.y, transform.position.z);

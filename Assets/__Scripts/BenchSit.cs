@@ -28,6 +28,7 @@ public class BenchSit : MonoBehaviour
             PlayerSit.SetActive(true);
         } else if (Input.GetKeyDown(KeyCode.E) && PlayerSit.activeSelf == true)
         {
+            PlayerSit.GetComponent<PlayerBench>().getUp();
             PlayerSit.SetActive(false);
             playerCollider.gameObject.SetActive(true);
         }
@@ -48,9 +49,9 @@ public class BenchSit : MonoBehaviour
         {
             waitTimer = waitTimer + Time.deltaTime;
         }
-        Debug.Log(timer);
-        Debug.Log(InteractIcon.GetComponent<SpriteRenderer>().color.a);
-        Debug.Log(InteractIcon.activeSelf);
+        //Debug.Log(timer);
+        //Debug.Log(InteractIcon.GetComponent<SpriteRenderer>().color.a);
+        //Debug.Log(InteractIcon.activeSelf);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
