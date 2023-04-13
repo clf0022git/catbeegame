@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public AudioClip grassWalk;
+    public AudioClip buzz;
+    private AudioSource audioSource;
     private Rigidbody2D rigid2D;
     private Animator animator;
     private BoxCollider2D boxCollider2d;
@@ -18,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     float maxFlySpeed = 2f;
     float maxWalkSpeed = 2f;
     [SerializeField] float flyTime = 1.0f;
-    [SerializeField] float jumpForce = 200f;
+    [SerializeField] float jumpForce = 100f;
     float flyTemp = 0.0f;
     public ParticleSystem dustLeft;
     public ParticleSystem dustRight;
@@ -35,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         this.rigid2D = GetComponent<Rigidbody2D>();
         this.animator = GetComponent<Animator>();
         this.boxCollider2d = GetComponent<BoxCollider2D>();
+        this.audioSource = GetComponent<AudioSource>();
         flyTemp = flyTime;
     }
 
@@ -47,17 +51,17 @@ public class PlayerMovement : MonoBehaviour
 
         if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) && IsGrounded())
         {
-            animator.SetBool("IsTilting", false);
+        //    animator.SetBool("IsTilting", false);
             animator.SetBool("IsWalking", true);
         }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
-        {
-            animator.SetBool("IsTilting", true);
-        }
-        else
-        {
-            animator.SetBool("IsTilting", false);
-        }
+        //else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
+        //{
+        //    animator.SetBool("IsTilting", true);
+        //}
+        //else
+        //{
+        //    animator.SetBool("IsTilting", false);
+        //}
     }
 
     // Update is called once per frame
@@ -120,10 +124,8 @@ public class PlayerMovement : MonoBehaviour
             spaceCheck = true;
         }
 
-        //Debug.Log(spaceCheck);
-
         //Allows flight for the during of the flightTimer, we can be adjusted as the player progresses
-        if (flyTemp > 0 && (!IsGrounded())) //Makes sure the player isn't cheating by flying under a platform
+        if (flyTemp > 0 && (!IsGrounded() || this.rigid2D.velocity.y != 0)) //Makes sure the player isn't cheating by flying under a platform
         {
             flyGauge.Show();
             if (Input.GetKey(KeyCode.Space))
@@ -153,8 +155,6 @@ public class PlayerMovement : MonoBehaviour
                 {
                     flyForce = 20f;
                 }
-
-             
 
                 this.rigid2D.AddForce(transform.up * flyForce);
             }
@@ -240,9 +240,20 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(speedx);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionStay2D(Collision2D collision)
     {
-        // Can set colliders here
+        if (collision.gameObject.tag == "Grass" && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)))
+        {
+            Debug.Log("grasswalk");
+            audioSource.clip = grassWalk;
+            //audioSource.loop = true;
+            audioSource.Play();
+        }
+        //else if (!(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)))
+        //{
+        //    audioSource.loop = false;
+        //    audioSource.Stop();
+        //}
     }
 
     void CreateDust(int key)
