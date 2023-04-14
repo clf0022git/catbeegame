@@ -29,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
     bool flightTurn = false;
     bool spaceCheck = true;
 
+    public float waterPushForce = 0.0f;
+    public float rainForce = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -242,7 +245,22 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Can set colliders here
+      
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.tag == "Water")
+        {
+            rigid2D.AddForce(new Vector2(waterPushForce, -4.0f), ForceMode2D.Force);
+            print("Touching water");
+        }
+
+        if (other.tag == "Rain")
+        {
+            rigid2D.AddForce(new Vector2(0.0f, -0.5f), ForceMode2D.Force);
+            print("Touching rain");
+        }
     }
 
     void CreateDust(int key)
