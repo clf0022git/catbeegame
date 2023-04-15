@@ -7,30 +7,31 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public AudioClip grassWalk;
-    public AudioClip buzz;
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource flySound;
+    [SerializeField] private AudioSource grassWalk;
+    [SerializeField] private LayerMask platformsLayerMask;
+    [SerializeField] private ParticleSystem dustLeft;
+    [SerializeField] private ParticleSystem dustRight;
+    [SerializeField] private FlyGauge flyGauge;
     private Rigidbody2D rigid2D;
     private Animator animator;
     private BoxCollider2D boxCollider2d;
-    [SerializeField] private LayerMask platformsLayerMask;
+    [SerializeField] float flyTime = 0.9f;
+    [SerializeField] float jumpForce = 100f;
     float flyForce = 20.0f;
     float flyHorizontalForce = 10.0f;
     float maxFlyHorizontalForce = 2f;
     float walkForce = 10.0f;
     float maxFlySpeed = 2f;
     float maxWalkSpeed = 2f;
-    [SerializeField] float flyTime = 1.0f;
-    [SerializeField] float jumpForce = 100f;
     float flyTemp = 0.0f;
-    public ParticleSystem dustLeft;
-    public ParticleSystem dustRight;
     float speed;
-    public FlyGauge flyGauge;
     int pastKey = 0;
     int rkey;
     bool flightTurn = false;
     bool spaceCheck = true;
+    [SerializeField] private float waterPushForce = 12f;
+    [SerializeField] private float rainForce = 20f;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
         this.rigid2D = GetComponent<Rigidbody2D>();
         this.animator = GetComponent<Animator>();
         this.boxCollider2d = GetComponent<BoxCollider2D>();
-        this.audioSource = GetComponent<AudioSource>();
         flyTemp = flyTime;
     }
 
@@ -54,13 +54,13 @@ public class PlayerMovement : MonoBehaviour
         //    animator.SetBool("IsTilting", false);
             animator.SetBool("IsWalking", true);
         }
-        //else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
-        //{
+       // else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
+       // {
         //    animator.SetBool("IsTilting", true);
         //}
         //else
         //{
-        //    animator.SetBool("IsTilting", false);
+       //     animator.SetBool("IsTilting", false);
         //}
     }
 
@@ -70,6 +70,11 @@ public class PlayerMovement : MonoBehaviour
         // move left and right
         // Includes my attempt to give the funny bee movement to the bee
         int key = 0;
+        if (IsGrounded())
+        {
+            flightTurn = false;
+        }
+
         if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
         {
             if (pastKey == -1 && !IsGrounded())
@@ -108,9 +113,6 @@ public class PlayerMovement : MonoBehaviour
         float speedx = Mathf.Abs(this.rigid2D.velocity.x);
         float speedy = Mathf.Abs(this.rigid2D.velocity.y);
 
-        //Debug.Log(speedx);
-        //Debug.Log(speedy);
-
         if (Input.GetKey(KeyCode.Space) && IsGrounded() && spaceCheck)
         {
             //Initial fly up
@@ -119,13 +121,16 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("IsWalking", false);
             animator.SetBool("IsFlying", true);
             spaceCheck = false;
-        } else if (!Input.GetKey(KeyCode.Space))
+        }
+        else if (!Input.GetKey(KeyCode.Space))
         {
             spaceCheck = true;
         }
 
+        //Debug.Log(spaceCheck);
+
         //Allows flight for the during of the flightTimer, we can be adjusted as the player progresses
-        if (flyTemp > 0 && (!IsGrounded() || this.rigid2D.velocity.y != 0)) //Makes sure the player isn't cheating by flying under a platform
+        if (flyTemp > 0 && (!IsGrounded() || this.rigid2D.velocity.y !=0)) //Makes sure the player isn't cheating by flying under a platform
         {
             flyGauge.Show();
             if (Input.GetKey(KeyCode.Space))
@@ -156,6 +161,8 @@ public class PlayerMovement : MonoBehaviour
                     flyForce = 20f;
                 }
 
+
+
                 this.rigid2D.AddForce(transform.up * flyForce);
             }
 
@@ -164,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 this.rigid2D.AddForce(transform.right * key * 50);
                 flightTurn = false;
-                //Debug.Log("boost triggered");
+                Debug.Log("boost triggered");
             }
 
             if (key == 0 && speedx != 0)
@@ -214,7 +221,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(speedy);
 
         // limit PC's speed and avoid acceleration.
-       if ((speedx < this.maxWalkSpeed) && IsGrounded())
+        if ((speedx < this.maxWalkSpeed) && IsGrounded())
         {
             this.rigid2D.AddForce(transform.right * key * this.walkForce);
         }
@@ -238,24 +245,51 @@ public class PlayerMovement : MonoBehaviour
         //    this.animator.speed = 1;
         //}
         //Debug.Log(speedx);
-    }
 
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Grass" && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)))
+        // Can set colliders here
+        if (IsGrounded() && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
         {
-            Debug.Log("grasswalk");
-            audioSource.clip = grassWalk;
-            //audioSource.loop = true;
-            audioSource.Play();
+            //Debug.Log("grasswalk");
+            if (!grassWalk.isPlaying)
+            {
+                grassWalk.Play();
+            }
         }
-        //else if (!(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)))
-        //{
-        //    audioSource.loop = false;
-        //    audioSource.Stop();
-        //}
+        else
+        {
+            grassWalk.Stop();
+        }
+
+        if (!IsGrounded())
+        {
+            //Debug.Log("buzzsound");
+            if (!flySound.isPlaying)
+            {
+                flySound.Play();
+            }
+        }
+        else
+        {
+            flySound.Stop();
+        }
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.tag == "Water")
+        {
+            rigid2D.AddForce(new Vector2(waterPushForce, -4.0f), ForceMode2D.Force);
+            print("Touching water");
+        }
+
+        if (other.tag == "Rain")
+        {
+            flyTemp -= Time.deltaTime;
+            flyGauge.SetGauge(flyTemp / flyTime);
+            //rigid2D.AddForce(new Vector2(rainForce, -0.5f), ForceMode2D.Force);
+            print("Touching rain");
+        }
+    }
     void CreateDust(int key)
     {
         // Trying to flip the dust particles but it is not working
@@ -288,5 +322,10 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(boxCollider2d.bounds.center - new Vector3(boxCollider2d.bounds.extents.x, boxCollider2d.bounds.extents.y + extraHeightTest), Vector2.right * (boxCollider2d.bounds.extents.x * 2f), rayColor);
         //Debug.Log(raycastHit2d.collider);
         return raycastHit2d.collider != null;
+    }
+
+    public bool IsMoving()
+    {
+        return animator.GetBool("IsWalking");
     }
 }

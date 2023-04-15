@@ -13,7 +13,7 @@ public class FlowerReact : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision);
+        //Debug.Log(collision);
         if (collision.gameObject == Player)
         {
             Player.transform.SetParent(PlayerParent.transform);
@@ -23,7 +23,7 @@ public class FlowerReact : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        Debug.Log(collision);
+        //Debug.Log(collision);
         if (collision.gameObject == Player)
         {
             fixFlower();

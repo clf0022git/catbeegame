@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class BenchSit : MonoBehaviour
 {
-    [SerializeField]
-    GameObject InteractIcon;
-    [SerializeField]
-    GameObject PlayerSit;
+    [SerializeField] private GameObject InteractIcon;
+    [SerializeField] private GameObject PlayerSit;
     Collider2D playerCollider;
     float timer = 0f;
     float timeEnd = 0.05f;
@@ -56,15 +54,21 @@ public class BenchSit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        InteractIcon.SetActive(true);
-        playerCollider = collision;
-        waitTimer = 0f;
+        if(collision.gameObject.tag == "Player")
+        {
+            InteractIcon.SetActive(true);
+            playerCollider = collision;
+            waitTimer = 0f;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        InteractIcon.SetActive(false);
-        timer = 0f;
-        InteractIcon.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5373f);
+        if(collision.gameObject.tag == "Player")
+        {
+            InteractIcon.SetActive(false);
+            timer = 0f;
+            InteractIcon.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5373f);
+        }
     }
 }

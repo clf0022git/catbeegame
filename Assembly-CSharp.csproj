@@ -58,16 +58,17 @@
   <ItemGroup>
     <Compile Include="Assets\__Scripts\BenchSit.cs" />
     <Compile Include="Assets\__Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\__Scripts\ChimneyScript.cs" />
+    <Compile Include="Assets\__Scripts\PlayerGrabbing.cs" />
     <Compile Include="Assets\__Scripts\FlowerReact.cs" />
+    <Compile Include="Assets\__Scripts\IndoorDoor.cs" />
     <Compile Include="Assets\__Scripts\PlayerBench.cs" />
     <Compile Include="Assets\__Scripts\PlatformAttach.cs" />
+    <Compile Include="Assets\__Scripts\GrassInteract.cs" />
+    <Compile Include="Assets\__Scripts\WaterPour.cs" />
     <Compile Include="Assets\__Scripts\FlyGauge.cs" />
     <Compile Include="Assets\__Scripts\CameraController.cs" />
     <Compile Include="Assets\__Scripts\FlowerScript.cs" />
-    <Compile Include="Assets\__Scripts\ChimneyScript.cs" />
-    <Compile Include="Assets\__Scripts\IndoorDoor.cs" />
-    <Compile Include="Assets\__Scripts\WaterPour.cs" />
-    <Compile Include="Assets\__Scripts\PlayerGrabbing.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

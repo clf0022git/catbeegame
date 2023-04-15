@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class FlyGauge : MonoBehaviour
 {
-    public Image image;
+    [SerializeField] private Image image;
     private float fillNumber = 1;
     private GameObject player;
     void Start()

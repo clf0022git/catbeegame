@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ChimneyScript : MonoBehaviour
 {
-    public GameObject insideHouse;
+    [SerializeField] private GameObject insideHouse;
+    [SerializeField] private GameObject key;
 
     private void Start()
     {
@@ -22,6 +23,7 @@ public class ChimneyScript : MonoBehaviour
         if (collision.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.E))
         {
             insideHouse.SetActive(true);
+            key.transform.parent = null;
             collision.gameObject.transform.position = new Vector3(64.7f, 2.4f, 0f);
         }
     }

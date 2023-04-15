@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField] GameObject underground;
     GameObject player;
     float cameraGroundPosition = -1.5f;
 
@@ -13,6 +14,7 @@ public class CameraController : MonoBehaviour
         this.player = GameObject.Find("Player");
         Vector3 playerPos = this.player.transform.position;
         transform.position = new Vector3(playerPos.x, cameraGroundPosition , transform.position.z);
+        underground.SetActive(false);
     }
 
     // Update is called once per frame
@@ -25,15 +27,16 @@ public class CameraController : MonoBehaviour
             Vector3 playerPos = this.player.transform.position;
             transform.position = new Vector3(playerPos.x, playerPos.y, transform.position.z);
         }
-        else if (this.player.transform.position.x < -18.5f && this.player.transform.position.x > -55.5f)
+        else if (this.player.transform.position.x < -19.2f && this.player.transform.position.x > -55.5f)
         {
             Vector3 playerPos = this.player.transform.position;
             transform.position = new Vector3(playerPos.x, -3.0f, transform.position.z);
         }
-        else if (this.player.transform.position.x < -75 || this.player.transform.position.y < -5)
+        else if (this.player.transform.position.x < -70 || this.player.transform.position.y < -5)
         {
             Vector3 playerPos = this.player.transform.position;
             transform.position = new Vector3(playerPos.x, playerPos.y, transform.position.z);
+            underground.SetActive(true);
         }
         else if (this.player.transform.position.y < -3.5 && this.player.transform.position.x > 25)
         {

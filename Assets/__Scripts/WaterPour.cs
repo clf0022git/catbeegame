@@ -15,44 +15,36 @@ public class WaterPour : MonoBehaviour
     void Start()
     {
         WateringCan = this.gameObject.GetComponent<Rigidbody2D>();
+        WaterLeft.Pause();
+        WaterLeft.Clear();
+        WaterRight.Pause();
+        WaterRight.Clear();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
         if (Input.GetKey(KeyCode.D))
         {
             key = 1;
-            
 
         }
         else if (Input.GetKey(KeyCode.A))
         {
             key = -1;
-            
-        }
-        else
-        {
-            WaterRight.Pause();
-            WaterLeft.Pause();
-            WaterRight.Clear();
-            WaterLeft.Clear();
         }
 
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if ((collision.gameObject == WateringCan.gameObject) && playerGrab.HoldingObject && Input.GetKey(KeyCode.LeftShift))
+        if ((this.gameObject == WateringCan.gameObject) && (playerGrab.HoldingObject == true) && Input.GetKey(KeyCode.LeftShift))
         {
+
+
             if (key == 1)
             {
 
                 WaterLeft.Pause();
                 WaterLeft.Clear();
                 WaterRight.Play();
-
 
             }
             else if (key == -1)
@@ -63,8 +55,22 @@ public class WaterPour : MonoBehaviour
                 WaterLeft.Play();
 
             }
+
         }
+        else
+        {
+
+            WaterLeft.Pause();
+            WaterLeft.Clear();
+            WaterRight.Pause();
+            WaterRight.Clear();
+
+        }
+
+
     }
 
 
+
 }
+
