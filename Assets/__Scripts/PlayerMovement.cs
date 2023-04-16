@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -31,7 +30,8 @@ public class PlayerMovement : MonoBehaviour
     bool flightTurn = false;
     bool spaceCheck = true;
     [SerializeField] private float waterPushForce = 12f;
-    [SerializeField] private float rainForce = 20f;
+    //[SerializeField] private float rainForce = 20f;
+    public bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
@@ -70,63 +70,67 @@ public class PlayerMovement : MonoBehaviour
         // move left and right
         // Includes my attempt to give the funny bee movement to the bee
         int key = 0;
-        if (IsGrounded())
-        {
-            flightTurn = false;
-        }
-
-        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
-        {
-            if (pastKey == -1 && !IsGrounded())
-            {
-                flightTurn = true;
-            }
-
-            if (pastKey == -1 && IsGrounded() && !Input.GetKey(KeyCode.A))
-            {
-                CreateDust(1);
-                pastKey = 0;
-            }
-            key = 1;
-            rkey = 1;
-            pastKey = 1;
-        }
-        else if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
-        {
-
-            if (pastKey == 1 && !IsGrounded())
-            {
-                flightTurn = true;
-            }
-
-            if (pastKey == 1 && IsGrounded() && !Input.GetKey(KeyCode.D))
-            {
-                CreateDust(-1);
-                pastKey = 0;
-            }
-            rkey = -1;
-            key = -1;
-            pastKey = -1;
-        }
-
         // decide PC's speed
         float speedx = Mathf.Abs(this.rigid2D.velocity.x);
         float speedy = Mathf.Abs(this.rigid2D.velocity.y);
 
-        if (Input.GetKey(KeyCode.Space) && IsGrounded() && spaceCheck)
+        if (canMove == true)
         {
-            //Initial fly up
-            this.rigid2D.AddForce(transform.up * jumpForce); // Initial force applied to the jump
-            flyGauge.Show();
-            animator.SetBool("IsWalking", false);
-            animator.SetBool("IsFlying", true);
-            spaceCheck = false;
-        }
-        else if (!Input.GetKey(KeyCode.Space))
-        {
-            spaceCheck = true;
-        }
 
+            if (IsGrounded())
+            {
+                flightTurn = false;
+            }
+
+            if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+            {
+                if (pastKey == -1 && !IsGrounded())
+                {
+                    flightTurn = true;
+                }
+
+                if (pastKey == -1 && IsGrounded() && !Input.GetKey(KeyCode.A))
+                {
+                    CreateDust(1);
+                    pastKey = 0;
+                }
+                key = 1;
+                rkey = 1;
+                pastKey = 1;
+            }
+            else if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            {
+
+                if (pastKey == 1 && !IsGrounded())
+                {
+                    flightTurn = true;
+                }
+
+                if (pastKey == 1 && IsGrounded() && !Input.GetKey(KeyCode.D))
+                {
+                    CreateDust(-1);
+                    pastKey = 0;
+                }
+                rkey = -1;
+                key = -1;
+                pastKey = -1;
+            }
+
+            if (Input.GetKey(KeyCode.Space) && IsGrounded() && spaceCheck)
+            {
+                //Initial fly up
+                this.rigid2D.AddForce(transform.up * jumpForce); // Initial force applied to the jump
+                flyGauge.Show();
+                animator.SetBool("IsWalking", false);
+                animator.SetBool("IsFlying", true);
+                spaceCheck = false;
+            }
+            else if (!Input.GetKey(KeyCode.Space))
+            {
+                spaceCheck = true;
+            }
+
+        }
         //Debug.Log(spaceCheck);
 
         //Allows flight for the during of the flightTimer, we can be adjusted as the player progresses

@@ -55,3 +55,6 @@ TagManager:
   - name: Items
     uniqueID: 2727340985
     locked: 0
+  - name: Stems
+    uniqueID: 430239349
+    locked: 0
