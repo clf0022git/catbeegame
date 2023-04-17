@@ -7,7 +7,7 @@ public class PlayerGrabbing : MonoBehaviour
 {
 
     private GameObject grabPosition;
-    private GameObject item = null;
+    public GameObject item = null;
     private GameObject player;
     private Rigidbody2D itemRigidBody;
     private SpriteRenderer itemSprite;
@@ -42,8 +42,7 @@ public class PlayerGrabbing : MonoBehaviour
             key = -1;
         }
 
-
-        if (HoldingObject == true)
+        if (HoldingObject == true && item != null)
         {
             item.layer = 0;
             item.GetComponent<Rigidbody2D>().freezeRotation = true;
@@ -81,10 +80,10 @@ public class PlayerGrabbing : MonoBehaviour
             itemCollider.enabled = false;
             itemSprite.sortingOrder = 2;
 
-            Debug.Log("HOLDING");
-            if (Input.GetKeyDown(KeyCode.E))
+            //Debug.Log("HOLDING");
+            if (Input.GetKeyDown(KeyCode.E) || item == null)
             {
-                Debug.Log("LetGO!");
+               // Debug.Log("LetGO!");
                 itemCollider.enabled = true;
                 itemSprite.sortingOrder = -1;
                 HoldingObject = false;
@@ -105,7 +104,7 @@ public class PlayerGrabbing : MonoBehaviour
     {
         if (other.tag == "Item")
         {
-            Debug.Log("ITEM!");
+            //Debug.Log("ITEM!");
         }
 
     }
@@ -119,7 +118,7 @@ public class PlayerGrabbing : MonoBehaviour
             {
                 if (!HoldingObject)
                 {
-                    Debug.Log("YOU PICKED IT UP");
+                    //Debug.Log("YOU PICKED IT UP");
                     HoldingObject = true;
                     itemRigidBody = other.gameObject.GetComponent<Rigidbody2D>();
                     item = other.gameObject;

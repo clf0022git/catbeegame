@@ -143,6 +143,7 @@ MonoBehaviour:
   buttonPrompt: {fileID: 6324756780613961566}
   textBox: {fileID: 4182205093133895941}
   textBubble: {fileID: 1092211702051858585}
+  checkQuest: 0
 --- !u!70 &3284585114944674940
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -447,7 +448,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2c0e63c1a3938b047845141ca456ea13, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dafa91a221c74664da229eeccd11b7e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

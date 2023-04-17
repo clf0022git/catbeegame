@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPC : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class NPC : MonoBehaviour
     public class Speech
     {
         public string[] dialogue;
+        public bool questGiven = false;
+        public string currentQuest = "";
     }
 
     public int amountOfSpeeches = 1;
@@ -18,8 +21,10 @@ public class NPC : MonoBehaviour
     public GameObject textBox;
     public GameObject textBubble;
 
+    private Text currentQuestText;
     Speech newSpeech = new Speech();
-    GameObject player;
+    public bool checkQuest = false;
+    GameObject player, grabCollider;
     TextAsset theSpeech;
     IEnumerator talk;
 
@@ -31,12 +36,21 @@ public class NPC : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
+        grabCollider = GameObject.Find("GrabCollider"); 
+        currentQuestText = GameObject.Find("ActualQuestText").GetComponent<Text>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.R))
         {
+            // Checks for the key quest
+            if (inRange && grabCollider.GetComponent<PlayerGrabbing>().HoldingObject) 
+            {
+                Debug.Log("Quest Checked.");
+                this.transform.GetComponent<NPCQuest>().CheckQuest(this.name + "Item");
+            }
+
             if (player.GetComponent<PlayerMovement>().canMove && !talking && inRange) // Start dialogue
             {
                 if (player.transform.position.x > this.transform.position.x) // Check position of player to face the correct direction
@@ -62,12 +76,15 @@ public class NPC : MonoBehaviour
             }
             else // End dialogue early
             {
-                StopCoroutine(talk);
-                player.GetComponent<PlayerMovement>().canMove = true;
-                talking = false;
-                speechIndex = 0;
-                textBubble.GetComponent<SpriteRenderer>().enabled = false;
-                textBox.GetComponent<TMP_Text>().text = "";
+                if (talk != null)
+                {
+                    StopCoroutine(talk);
+                    player.GetComponent<PlayerMovement>().canMove = true;
+                    talking = false;
+                    speechIndex = 0;
+                    textBubble.GetComponent<SpriteRenderer>().enabled = false;
+                    textBox.GetComponent<TMP_Text>().text = "";
+                }
             }
         }
     }
@@ -78,7 +95,7 @@ public class NPC : MonoBehaviour
         newSpeech = JsonUtility.FromJson<Speech>(theSpeech.text);
         int speechLength = newSpeech.dialogue.Length;
 
-        while (speechIndex < speechLength && talking) // All dialogue happens here
+        while (speechIndex < speechLength && talking &&!checkQuest) // All dialogue happens here
         {
             textBox.GetComponent<TMP_Text>().text = newSpeech.dialogue[speechIndex];
             speechIndex++;
@@ -99,6 +116,19 @@ public class NPC : MonoBehaviour
         {
             speechNum = 1;
         }
+
+        if (newSpeech != null && newSpeech.currentQuest != "")
+        {
+            currentQuestText.text = newSpeech.currentQuest;
+        }
+
+        if (newSpeech != null && (newSpeech.questGiven == true || checkQuest == true))
+        {
+            Debug.Log("Change Cat");
+            this.transform.GetComponent<NPCQuest>().CatQuest(this.name + "Start");
+            newSpeech.questGiven = false;
+        }
+
     }
 
     IEnumerator WaitForKeyPress(KeyCode key) // Wait for mouse click to continue dialogue
@@ -115,17 +145,23 @@ public class NPC : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("NPC Interaction enabled");
-        inRange = true;
-        buttonPrompt.GetComponent<SpriteRenderer>().enabled = true;
+        if (collision.gameObject.tag == "Player")
+        {
+            //Debug.Log("NPC Interaction enabled");
+            inRange = true;
+            buttonPrompt.GetComponent<SpriteRenderer>().enabled = true;
+        }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("NPC Interaction disabled");
-        inRange = false;
-        buttonPrompt.GetComponent<SpriteRenderer>().enabled = false;
+        if (collision.gameObject.tag == "Player")
+        {
+            //Debug.Log("NPC Interaction disabled");
+            inRange = false;
+            buttonPrompt.GetComponent<SpriteRenderer>().enabled = false;
+        }
     }
 }

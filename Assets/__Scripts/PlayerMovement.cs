@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float waterPushForce = 12f;
     //[SerializeField] private float rainForce = 20f;
     public bool canMove = true;
+    public bool firstWing = false, secondWing = false, thirdWing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -73,6 +74,20 @@ public class PlayerMovement : MonoBehaviour
         // decide PC's speed
         float speedx = Mathf.Abs(this.rigid2D.velocity.x);
         float speedy = Mathf.Abs(this.rigid2D.velocity.y);
+
+        if (firstWing == true)
+        {
+            flyTime += 1;
+            firstWing = false;
+        } else if (secondWing == true)
+        {
+            flyTime += 1;
+            secondWing = false;
+        } else if( thirdWing == true)
+        {
+            flyTime += 1;
+            thirdWing = false;
+        }
 
         if (canMove == true)
         {

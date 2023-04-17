@@ -6,10 +6,12 @@ public class ChimneyScript : MonoBehaviour
 {
     [SerializeField] private GameObject insideHouse;
     [SerializeField] private GameObject key;
+    private GameObject player;
 
     private void Start()
     {
         insideHouse.SetActive(false);
+        player = GameObject.Find("Player");
     }
 
     private void Update()
@@ -24,7 +26,8 @@ public class ChimneyScript : MonoBehaviour
         {
             insideHouse.SetActive(true);
             key.transform.parent = null;
-            collision.gameObject.transform.position = new Vector3(64.7f, 2.4f, 0f);
+            Debug.Log("Player Moved.");
+            player.transform.position = new Vector3(64.7f, 1.8f, 0f);
         }
     }
 }
