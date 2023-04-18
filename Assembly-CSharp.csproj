@@ -53,7 +53,7 @@
     <UnityVersion>2020.3.40f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\__Scripts\BenchSit.cs" />
@@ -91,6 +91,7 @@
     <Compile Include="Assets\Font\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Font\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\__Scripts\MusicPlayer.cs" />
+    <Compile Include="Assets\__Scripts\NPCQuest.cs" />
     <Compile Include="Assets\__Scripts\WaterPour.cs" />
     <Compile Include="Assets\Font\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\__Scripts\FlyGauge.cs" />
@@ -111,7 +112,7 @@
     <Compile Include="Assets\Font\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\__Scripts\OptionsMenu.cs" />
     <Compile Include="Assets\Font\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
-    <Compile Include="Assets\__Scripts\NPCQuest.cs" />
+    <Compile Include="Assets\__Scripts\CloudBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Font\TextMesh Pro\Shaders\TMPro.cginc" />
