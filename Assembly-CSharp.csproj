@@ -108,11 +108,11 @@
     <Compile Include="Assets\Font\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\__Scripts\NPC.cs" />
     <Compile Include="Assets\Font\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
+    <Compile Include="Assets\__Scripts\CloudBehavior.cs" />
     <Compile Include="Assets\Font\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Font\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\__Scripts\OptionsMenu.cs" />
     <Compile Include="Assets\Font\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
-    <Compile Include="Assets\__Scripts\CloudBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Font\TextMesh Pro\Shaders\TMPro.cginc" />
