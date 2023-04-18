@@ -4,7 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - WindZone
+  - Chimney
+  - Grass
+  - Item
+  - Water
+  - Rain
   layers:
   - Default
   - TransparentFX
@@ -12,11 +16,11 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
+  - 
   - 
   - 
   - Platforms
-  - WindZone
+  - 
   - 
   - 
   - 
@@ -41,4 +45,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Foreground
+    uniqueID: 3729064591
+    locked: 0
+  - name: Grass
+    uniqueID: 2669443533
+    locked: 0
+  - name: Items
+    uniqueID: 2727340985
+    locked: 0
+  - name: Stems
+    uniqueID: 430239349
     locked: 0
