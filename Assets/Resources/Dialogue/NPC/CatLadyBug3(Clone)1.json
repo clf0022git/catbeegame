@@ -1,5 +1,5 @@
 {
-  "dialogue" : [ "Thank you so much for bee-ing willing to help me!", "Here's a little something for your trouble.", "It's my secret flying technique!" ],
+  "dialogue" : [ "Thank you so much for bee-ing willing to help me!", "Here's a little something for your trouble.", "It's my secret flying technique!", "You'll be able to stay in the air for longer than before.", "You should go visit my friend across the river.", "I'm sure he'd appreciate some company!" ],
   "questGiven" : true,
   "currentQuest" : ""
 } 

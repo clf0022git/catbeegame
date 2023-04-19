@@ -25,7 +25,7 @@ public class GrassInteract : MonoBehaviour
         if(collider.gameObject.tag == "Player" && player.GetComponent<PlayerMovement>().IsMoving())
         {
             animator.speed = 1;
-            Debug.Log("Played");
+            //Debug.Log("Played");
         } else
         {
             animator.speed = 0;

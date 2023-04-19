@@ -1,5 +1,5 @@
 {
-  "dialogue" : [ "Press space to fly.", "Press 'E' to pick things up", "Press 'R' to initiate conversations.", "'Left-click' in conversations to progress them or press 'R' again to exit." ],
+  "dialogue" : [ "Press 'E' to interact/talk.", "Press 'Q' to cancel a conversation.", "Press space to fly.", "Press 'F' to pick things up.", "Unless it is a Soccer ball. That would be cheating." ],
   "questGiven" : false,
   "currentQuest" : ""
 }

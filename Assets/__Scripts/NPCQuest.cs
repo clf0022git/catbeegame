@@ -18,14 +18,10 @@ public class NPCQuest : MonoBehaviour
     public GameObject CatPillar4;
 
     private GameObject grabCollider;
-    private GameObject firstWing, secondWing, thirdWing;
     private GameObject player;
     private void Start()
     {
         grabCollider = GameObject.Find("GrabCollider");
-        firstWing = GameObject.Find("firstWing");
-        secondWing = GameObject.Find("secondWing");
-        thirdWing = GameObject.Find("thirdWing");
         player = GameObject.Find("Player");
     }
     public void CatQuest(string bug)
@@ -39,11 +35,9 @@ public class NPCQuest : MonoBehaviour
         {
             Instantiate(CatLadyBug3, transform.position, transform.rotation);
             Destroy(gameObject);
-        }
+        } 
         else if (bug == "CatLadyBug3(Clone)Start")
         {
-            firstWing.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            player.GetComponent<PlayerMovement>().firstWing = true;
             Instantiate(CatLadyBug4, transform.position, transform.rotation);
             Destroy(gameObject);
         }
@@ -59,8 +53,6 @@ public class NPCQuest : MonoBehaviour
         } 
         else if (bug == "CatAnt3(Clone)Start")
         {
-            secondWing.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            player.GetComponent<PlayerMovement>().secondWing = true;
             Instantiate(CatAnt4, transform.position, transform.rotation);
             Destroy(gameObject);
         }
@@ -72,13 +64,6 @@ public class NPCQuest : MonoBehaviour
         else if (bug == "CatPillar2(Clone)Start")
         {
             Instantiate(CatPillar3, transform.position, transform.rotation);
-            Destroy(gameObject);
-        }
-        else if (bug == "CatPillar3(Clone)Start")
-        {
-            thirdWing.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            player.GetComponent<PlayerMovement>().thirdWing = true;
-            Instantiate(CatPillar4, transform.position, transform.rotation);
             Destroy(gameObject);
         }
     }
@@ -96,9 +81,6 @@ public class NPCQuest : MonoBehaviour
                 grabCollider.GetComponent<PlayerGrabbing>().Grabbable = false;
             }
         } 
-        else if (item == "CatAnt2(Clone)Item")
-        {
 
-        }
     }
 }

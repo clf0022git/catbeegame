@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private AudioSource flySound;
     [SerializeField] private AudioSource grassWalk;
+    [SerializeField] private AudioSource splash;
+    [SerializeField] private AudioSource ballHit;
     [SerializeField] private LayerMask platformsLayerMask;
     [SerializeField] private ParticleSystem dustLeft;
     [SerializeField] private ParticleSystem dustRight;
@@ -32,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float waterPushForce = 12f;
     //[SerializeField] private float rainForce = 20f;
     public bool canMove = true;
-    public bool firstWing = false, secondWing = false, thirdWing = false;
+    public bool firstWing = false, secondWing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -45,9 +47,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (IsGrounded())
+        if (IsGrounded() && !Input.GetKey(KeyCode.Space))
         {
             animator.SetBool("IsFlying", false);
+        } else
+        {
+            animator.SetBool("IsWalking", false);
         }
 
         if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) && IsGrounded())
@@ -77,16 +82,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (firstWing == true)
         {
-            flyTime += 1;
+            flyTime += 0.8f;
             firstWing = false;
-        } else if (secondWing == true)
+        }
+        else if (secondWing == true)
         {
-            flyTime += 1;
+            flyTime += 1.2f;
             secondWing = false;
-        } else if( thirdWing == true)
-        {
-            flyTime += 1;
-            thirdWing = false;
         }
 
         if (canMove == true)
@@ -178,6 +180,14 @@ public class PlayerMovement : MonoBehaviour
                 else if (this.rigid2D.velocity.y <= maxFlySpeed)
                 {
                     flyForce = 20f;
+                }
+
+                if (key == 1 && (this.rigid2D.velocity.x  < -maxFlyHorizontalForce)) {
+                    this.rigid2D.AddForce(transform.right * key * 50);
+                } 
+                else if (key == -1 && (this.rigid2D.velocity.x > maxFlyHorizontalForce))
+                {
+                    this.rigid2D.AddForce(transform.right * key * 50);
                 }
 
 
@@ -293,12 +303,38 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Water")
+        {
+            if (!splash.isPlaying)
+            {
+                splash.Play();
+            }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ball")
+        {
+            if (!ballHit.isPlaying)
+            {
+                ballHit.Play();
+            }
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.tag == "Water")
         {
-            rigid2D.AddForce(new Vector2(waterPushForce, -4.0f), ForceMode2D.Force);
-            print("Touching water");
+            if (this.rigid2D.velocity.x <= 11)
+            {
+                rigid2D.AddForce(new Vector2(waterPushForce, -4.0f), ForceMode2D.Force);
+            }
+            //Debug.Log(this.rigid2D.velocity.x);
+            //print("Touching water");
         }
 
         if (other.tag == "Rain")
@@ -306,7 +342,7 @@ public class PlayerMovement : MonoBehaviour
             flyTemp -= Time.deltaTime;
             flyGauge.SetGauge(flyTemp / flyTime);
             //rigid2D.AddForce(new Vector2(rainForce, -0.5f), ForceMode2D.Force);
-            print("Touching rain");
+            //print("Touching rain");
         }
     }
     void CreateDust(int key)

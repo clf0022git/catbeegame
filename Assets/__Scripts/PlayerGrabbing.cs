@@ -81,13 +81,14 @@ public class PlayerGrabbing : MonoBehaviour
             itemSprite.sortingOrder = 2;
 
             //Debug.Log("HOLDING");
-            if (Input.GetKeyDown(KeyCode.E) || item == null)
+            if (Input.GetKeyDown(KeyCode.F) || item == null)
             {
                // Debug.Log("LetGO!");
                 itemCollider.enabled = true;
                 itemSprite.sortingOrder = -1;
                 HoldingObject = false;
                 Grabbable = false;
+                item.layer = 9;
             }
         }
         else
@@ -114,7 +115,7 @@ public class PlayerGrabbing : MonoBehaviour
         if (other.tag == "Item")
         {
 
-            if (Input.GetKeyUp(KeyCode.E) && Grabbable == true)
+            if (Input.GetKeyUp(KeyCode.F) && Grabbable == true)
             {
                 if (!HoldingObject)
                 {
@@ -124,6 +125,7 @@ public class PlayerGrabbing : MonoBehaviour
                     item = other.gameObject;
                     itemSprite = other.gameObject.GetComponent<SpriteRenderer>();
                     itemCollider = other.gameObject.GetComponent<BoxCollider2D>();
+                    item.layer = 0;
 
                 }
             }

@@ -47,6 +47,10 @@ public class CameraController : MonoBehaviour
         {
             Vector3 playerPos = this.player.transform.position;
             transform.position = new Vector3(playerPos.x, playerPos.y, transform.position.z);
+        } else if (this.player.transform.position.y > 16.5 && this.player.transform.position.x > -7 && this.player.transform.position.x < 7)
+        {
+            Vector3 playerPos = this.player.transform.position;
+            transform.position = new Vector3(playerPos.x, playerPos.y, transform.position.z);
         }
         else
         {

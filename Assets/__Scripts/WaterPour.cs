@@ -8,6 +8,7 @@ public class WaterPour : MonoBehaviour
     Rigidbody2D WateringCan;
     public ParticleSystem WaterLeft;
     public ParticleSystem WaterRight;
+    public AudioSource waterPour;
     int key = 0;
 
 
@@ -45,7 +46,10 @@ public class WaterPour : MonoBehaviour
                 WaterLeft.Pause();
                 WaterLeft.Clear();
                 WaterRight.Play();
-
+                if (!waterPour.isPlaying)
+                {
+                    waterPour.Play();
+                }
             }
             else if (key == -1)
             {
@@ -53,7 +57,10 @@ public class WaterPour : MonoBehaviour
                 WaterRight.Pause();
                 WaterRight.Clear();
                 WaterLeft.Play();
-
+                if (!waterPour.isPlaying)
+                {
+                    waterPour.Play();
+                }
             }
 
         }
@@ -64,6 +71,7 @@ public class WaterPour : MonoBehaviour
             WaterLeft.Clear();
             WaterRight.Pause();
             WaterRight.Clear();
+            waterPour.Stop();
 
         }
 

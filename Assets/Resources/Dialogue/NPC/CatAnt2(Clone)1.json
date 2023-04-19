@@ -1,5 +1,5 @@
 {
-  "dialogue" : [ "Did you water the plants yet?" ],
+  "dialogue" : [ "Have you finished watering yet?", "Remember, it's 'Shift' to water while holding the Watering Can." ],
   "questGiven" : false,
   "currentQuest" : ""
-} 
+}

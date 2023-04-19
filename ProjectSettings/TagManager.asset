@@ -9,6 +9,10 @@ TagManager:
   - Item
   - Water
   - Rain
+  - Ball
+  - MailBoxA
+  - MailBoxB
+  - Watering
   layers:
   - Default
   - TransparentFX
@@ -20,7 +24,7 @@ TagManager:
   - 
   - 
   - Platforms
-  - 
+  - Flower
   - 
   - 
   - 
