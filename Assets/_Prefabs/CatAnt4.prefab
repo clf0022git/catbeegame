@@ -352,8 +352,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 430239349
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 821adc813cf919a49b9ea2d0347dc003, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 1772374222123778050}
   - component: {fileID: 6883418020045116061}
   - component: {fileID: 8263518624357401724}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -655,7 +655,7 @@ GameObject:
   - component: {fileID: 107206216720333747}
   - component: {fileID: 5526403878220899381}
   - component: {fileID: 7138858546986789735}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -700,8 +700,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 430239349
+  m_SortingOrder: 6
   m_TargetDisplay: 0
 --- !u!114 &5526403878220899381
 MonoBehaviour:
