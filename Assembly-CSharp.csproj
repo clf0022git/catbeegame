@@ -113,6 +113,9 @@
     <Compile Include="Assets\Font\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\__Scripts\OptionsMenu.cs" />
     <Compile Include="Assets\Font\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
+    <Compile Include="Assets\Art\UI\ReturnToMenu_Button.cs" />
+    <Compile Include="Assets\Art\UI\FadeToBlack.cs" />
+    <Compile Include="Assets\__Scripts\UICameraZoom.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Font\TextMesh Pro\Shaders\TMPro.cginc" />
