@@ -1,0 +1,5 @@
+{
+  "dialogue" : [ "What a nice and windy day to be a caterpillar!", "If only I had my wings, I could fly down and deliver the mail on time.", "At this rate, I'll be slower than the pony express.", "Oh hi!, You're new here!", "I'm Caterpillar, and I deliver the mail.", "I'm earning my wings, so I'm a little slow at the moment. But you have wings!", "Would you help me deliver to all of the villagers?" ]
+  "questGiven" : true,
+  "currentQuest" : "Deliver the mail!"
+}

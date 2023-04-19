@@ -1,0 +1,5 @@
+{
+  "dialogue" : [ "I do say, ol' dear chap, can you help me?", "You see, I've planted these special underground flowers. But I didn't realize they'd need so much water!", "My arms are a bit too small to water them all. Will you water them for me?" ],
+  "questGiven" : true,
+  "currentQuest" : "Water the Flowers!"
+}
