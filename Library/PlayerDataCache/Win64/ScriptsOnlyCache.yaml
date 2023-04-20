@@ -1328,4 +1328,4 @@ ScriptsOnlyBuild:
   - Assets/_Scenes/_Intro.unity
   - Assets/_Scenes/_Scene_0.unity
   - Assets/_Scenes/_Game_Over.unity
-  playerPath: C:/Users/cfech/Desktop/CatBee Build/Cat Bee Game.exe
+  playerPath: C:/Users/cfech/Desktop/ComputerCat/Cat Bee Game.exe

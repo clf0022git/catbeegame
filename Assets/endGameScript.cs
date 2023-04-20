@@ -35,6 +35,7 @@ public class endGameScript : MonoBehaviour
     public void unHideDelivered()
     {
         packageText.gameObject.SetActive(true);
+        packageText.text = "Delivered: " + MailBoxDeilvery.packages;
     }
 
    // public void delivery(float packages)
@@ -45,27 +46,14 @@ public class endGameScript : MonoBehaviour
     public void firstdelivery(int packages)
     {
         firstDeliver = true;
-        if (packages == 2)
-        {
-            packageText.text = "Delivered: 1";
-        } 
-        else if (packages == 4)
-        {
-            packageText.text = "Delivered: 2";
-        }
+        packageText.text = "Delivered: " + packages;
+
     }
 
     public void seconddelivery(int packages)
     {
-        secondDeliver = true;
-        if (packages == 2)
-        {
-            packageText.text = "Delivered: 1";
-        }
-        else if (packages == 4)
-        {
-            packageText.text = "Delivered: 2";
-        }
+       secondDeliver = true;
+        packageText.text = "Delivered: " + packages;
     }
 
     public void onClickYesButton()

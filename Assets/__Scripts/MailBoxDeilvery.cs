@@ -30,6 +30,7 @@ public class MailBoxDeilvery : MonoBehaviour
             grabCollider.GetComponent<PlayerGrabbing>().Grabbable = false;
             packages = packages + 1;
             firstDeliver = true;
+            Debug.Log(packages);
             GameObject.Find("EndGame").GetComponent<endGameScript>().firstdelivery(packages);
             Destroy(this.gameObject);
         } 
@@ -40,6 +41,7 @@ public class MailBoxDeilvery : MonoBehaviour
             packages = packages + 1;
             GameObject.Find("EndGame").GetComponent<endGameScript>().seconddelivery(packages);
             secondDeliver = true;
+            Debug.Log(packages);
             Destroy(this.gameObject);
         }
         
