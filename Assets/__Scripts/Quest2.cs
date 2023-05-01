@@ -9,8 +9,10 @@ public class Quest2 : MonoBehaviour
     private static bool Quest2Complete;
     private bool IsWatered;
     private GameObject flower;
+    private GameObject CatAnt;
     private Animator animator;
-    
+
+    bool finishedFlowers = false;
     
 
     // Start is called before the first frame update
@@ -19,19 +21,25 @@ public class Quest2 : MonoBehaviour
         flowerCount = 0;
         animator = this.GetComponent<Animator>();
         Quest2Complete = false;
-        Debug.Log("Quest Start");
+        //Debug.Log("Quest Start");
         IsWatered = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(flowerCount >= 9)
+        if (flowerCount == 12 && finishedFlowers == false)
         {
-            Quest2Complete = true;
-            Debug.Log("Complete");
+            if (GameObject.Find("CatAnt2(Clone)") != null)
+            {
+                CatAnt= GameObject.Find("CatAnt2(Clone)");
+            }
+            CatAnt.GetComponent<NPC>().checkQuest = true;
+            //Debug.Log("Complete");
+            flowerCount = 0;
+            finishedFlowers = true;
         }
-        Debug.Log(flowerCount);
+       // Debug.Log(flowerCount);
     }
 
     void OnParticleCollision(GameObject other)
@@ -39,11 +47,11 @@ public class Quest2 : MonoBehaviour
         if(other.tag == "Watering")
         {
             animator.SetBool("IsWatered", true);
-            Debug.Log("I'm being watered");
+            //Debug.Log("I'm being watered");
         }
     }
 
-    void flowerGrown()
+    public void flowerGrown()
     {
         flowerCount++;
     }

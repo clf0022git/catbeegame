@@ -1,5 +1,5 @@
 {
-  "dialogue" : [ "Did you find the key yet?" ],
+  "dialogue" : [ "Did you find the key yet?", "Remember, you need to press 'E' on the chimney." ],
   "questGiven" : false,
   "currentQuest" : ""
 } 

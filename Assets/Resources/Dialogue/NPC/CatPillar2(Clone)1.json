@@ -1,5 +1,5 @@
 {
- "dialogue" : [ "There are three red mailboxes to put these letters in.", "Come find me again when you're done!" ],
+ "dialogue" : [ "There are two mailboxes to put these packages in.", "I believe CatAnt ordered the pot...", "And CatLadyBug ordered the door key.", "Come find me again when you're done!" ],
  "questGiven" : false,
  "currentQuest" : ""
 }

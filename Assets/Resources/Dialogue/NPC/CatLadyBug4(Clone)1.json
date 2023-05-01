@@ -1,5 +1,5 @@
 {
-  "dialogue" : [ "You should go visit my friend across the river.", "I'm sure he'd appreciate some company!" ],
+  "dialogue" : [ "You should be able to cross the river now with that new technique!" ],
   "questGiven" : false,
-  "currentQuest" : "Cross the rocky river!"
+  "currentQuest" : ""
 } 

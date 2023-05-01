@@ -1,5 +1,5 @@
 {
-  "dialogue" : [ "They say there's a bug who lives among the trees...", "I'd say you should check that out, my dear fellow." ]
+  "dialogue" : [ "Oh, by the way.", "That Watering Can has more uses than just down there, ol' Sport.", "If you water those sprouts around here, you might see some more flowers grow." ],
   "questGiven" : false,
-  "currentQuest" : "Climb the tree!"
+  "currentQuest" : ""
 }

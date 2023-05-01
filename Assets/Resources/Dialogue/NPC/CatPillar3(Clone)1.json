@@ -1,5 +1,5 @@
-{{
-	"dialogue" : [ "Thanks so much for all your help! I couldn't have made it on time without you."],
+{
+	"dialogue" : [ "Thanks so much for all your help! I couldn't have made it on time without you.", "Tell you what, there's a neat party happening in town for you.", "Let's go check it out!"],
 	"questGiven" : true,
-	"currentQuest" : ""
-}}
+	"currentQuest" : "Celebrate!"
+}

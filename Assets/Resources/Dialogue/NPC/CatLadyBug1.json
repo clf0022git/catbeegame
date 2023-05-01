@@ -1,5 +1,5 @@
 {
-  "dialogue" : [ "Oh no! What a CAT-astrophe!", "I've lost my house key.", "You can get into my house by pressing 'e' on the chimney", "Do you think you could help me get it?" ],
+  "dialogue" : [ "Oh no! What a CAT-astrophe!", "I've lost my house key.", "You can get into my house through the chimney.", "Do you think you could help me get it?" ],
   "questGiven" : true,
   "currentQuest" : "Get CatLadyBug's Key!"
 } 

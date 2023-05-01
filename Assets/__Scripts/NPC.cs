@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class NPC : MonoBehaviour
 {
@@ -17,9 +19,10 @@ public class NPC : MonoBehaviour
     public int amountOfSpeeches = 1;
     public bool cycleSpeeches = true;
     public string speechPath;   // The rest of these need to be connected in the editor
-    public GameObject buttonPrompt; 
     public GameObject textBox;
     public GameObject textBubble;
+    private GameObject firstWing, secondWing;
+    private GameObject canvas;
 
     private Text currentQuestText;
     Speech newSpeech = new Speech();
@@ -27,25 +30,37 @@ public class NPC : MonoBehaviour
     GameObject player, grabCollider;
     TextAsset theSpeech;
     IEnumerator talk;
+    AudioSource audioSource;
 
+    bool keyPressed = false;
     bool talking = false;
-    bool inRange = false;
+    public bool inRange = false;
     int speechNum = 1;
     int speechIndex = 0;
+    bool finalTalk = false;
 
     void Start()
     {
         player = GameObject.Find("Player");
         grabCollider = GameObject.Find("GrabCollider"); 
         currentQuestText = GameObject.Find("ActualQuestText").GetComponent<Text>();
+        audioSource = this.GetComponent<AudioSource>();
+        firstWing = GameObject.Find("firstWing");
+        secondWing = GameObject.Find("secondWing");
+        canvas = GameObject.Find("EndGame");
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            keyPressed = true;
+        } 
+        else if (keyPressed == true)
         {
             // Checks for the key quest
-            if (inRange && grabCollider.GetComponent<PlayerGrabbing>().HoldingObject) 
+            if (this.name == "CatLadyBug2(Clone)" && inRange && grabCollider.GetComponent<PlayerGrabbing>().HoldingObject) 
             {
                 Debug.Log("Quest Checked.");
                 this.transform.GetComponent<NPCQuest>().CheckQuest(this.name + "Item");
@@ -74,20 +89,22 @@ public class NPC : MonoBehaviour
                 talk = Talk();
                 StartCoroutine(talk);
             }
-            else // End dialogue early
+            keyPressed = false;
+        } 
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (talk != null)
             {
-                if (talk != null)
-                {
-                    StopCoroutine(talk);
-                    player.GetComponent<PlayerMovement>().canMove = true;
-                    talking = false;
-                    speechIndex = 0;
-                    textBubble.GetComponent<SpriteRenderer>().enabled = false;
-                    textBox.GetComponent<TMP_Text>().text = "";
-                }
+                StopCoroutine(talk);
+                player.GetComponent<PlayerMovement>().canMove = true;
+                talking = false;
+                speechIndex = 0;
+                textBubble.GetComponent<SpriteRenderer>().enabled = false;
+                textBox.GetComponent<TMP_Text>().text = "";
             }
         }
     }
+
 
     IEnumerator Talk() // Coroutine goes through JSON string array until the last index then returns control to the player
     {
@@ -97,9 +114,41 @@ public class NPC : MonoBehaviour
 
         while (speechIndex < speechLength && talking &&!checkQuest) // All dialogue happens here
         {
+            if (!audioSource.isPlaying && this.name != "Sign")
+            {
+                audioSource.Play();
+            }
             textBox.GetComponent<TMP_Text>().text = newSpeech.dialogue[speechIndex];
-            speechIndex++;
-            yield return WaitForKeyPress(KeyCode.Mouse0);
+            if (newSpeech.dialogue[speechIndex] == "It's my secret flying technique!")
+            {
+                firstWing.GetComponent<UnityEngine.UI.Image>().color = new Color32(255, 255, 255, 255);
+                player.GetComponent<PlayerMovement>().firstWing = true;
+                GameObject.Find("WingGetParticles").GetComponent<ParticleSystem>().Play();
+            }
+            else if (newSpeech.dialogue[speechIndex] == "Here take these wings so you can fly higher too!")
+            {
+                secondWing.GetComponent<UnityEngine.UI.Image>().color = new Color32(255, 255, 255, 255);
+                player.GetComponent<PlayerMovement>().secondWing = true;
+                GameObject.Find("WingGetParticles").GetComponent<ParticleSystem>().Play();
+            }
+            else if (newSpeech.dialogue[speechIndex] == "Let's go check it out!")
+            {
+                canvas.GetComponent<endGameScript>().unHide();
+            } 
+            else if (newSpeech.dialogue[speechIndex] == "Would you help me deliver to all of the villagers?")
+            {
+                canvas.GetComponent<endGameScript>().unHideDelivered();
+            }
+            else if (newSpeech.dialogue[speechIndex] == "I'm sure he'd appreciate some company!")
+            {
+                newSpeech.currentQuest = "Cross the rocky river!";
+            }
+            else if (newSpeech.dialogue[speechIndex] == "I'd say you should check that out, my dear fellow.")
+            {
+                newSpeech.currentQuest = "Climb the tree!";
+            }
+                speechIndex++;
+            yield return WaitForKeyPress(KeyCode.E);
         }
 
         // End of dialogue checklist
@@ -145,23 +194,4 @@ public class NPC : MonoBehaviour
         }
     }
 
-    void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            //Debug.Log("NPC Interaction enabled");
-            inRange = true;
-            buttonPrompt.GetComponent<SpriteRenderer>().enabled = true;
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            //Debug.Log("NPC Interaction disabled");
-            inRange = false;
-            buttonPrompt.GetComponent<SpriteRenderer>().enabled = false;
-        }
-    }
 }
